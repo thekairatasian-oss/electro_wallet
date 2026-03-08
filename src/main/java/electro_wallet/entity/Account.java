@@ -21,11 +21,11 @@ public class Account {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @Column(nullable = false)
+        @Column(nullable = false, precision = 19, scale = 2)
         private BigDecimal balance = BigDecimal.ZERO;
 
         @CreationTimestamp
-        private LocalDateTime created;
+        private LocalDateTime createdAt;
 
         @Version
         private Long version;

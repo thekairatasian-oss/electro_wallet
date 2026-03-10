@@ -87,19 +87,18 @@ public class TransferService {
     }
 
     @Transactional(readOnly = true)
-    public Page<TransferResponse> getTransactionHistory(Long userId, Pageable pageable) {
-        Account account = accountRepository.findByUserId(userId)
+    public Page<TransferResponse> getTransactionHistory(String email, Pageable pageable) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.USER_NOT_FOUND));
+
+        Account account = accountRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.ACCOUNT_NOT_FOUND));
 
-        Page<Transfer> transfers = transferRepository
-                .findBySenderIdOrReceiverId(
-                        account.getId(),
-                        account.getId(),
-                        pageable
-                );
-        log.info("Запрос истории: страница {}, размер {}, для юзера ID: {}",
-                pageable.getPageNumber(), pageable.getPageSize(), userId);
 
-        return transfers.map(transferMapper::toResponse);
+        log.info("Запрос истории: страница {}, размер {}, для юзера ID: {}",
+                pageable.getPageNumber(), pageable.getPageSize(), email);
+
+        return transferRepository.findBySenderIdOrReceiverId(account.getId(), account.getId(), pageable)
+                .map(transferMapper::toResponse);
     }
 }

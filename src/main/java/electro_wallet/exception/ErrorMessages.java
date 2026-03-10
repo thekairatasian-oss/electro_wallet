@@ -2,7 +2,6 @@ package electro_wallet.exception;
 
 public interface ErrorMessages {
 
-
         // 400 Bad Request (Ошибки клиента, неправильные данные)
         String VALIDATION_FAILED = "Ошибка валидации данных";
         String INVALID_PHONE_FORMAT = "Некорректный формат номера телефона. Ожидается +996XXXXXXXXX";
@@ -27,6 +26,4 @@ public interface ErrorMessages {
         // 500 Internal Server Error (Ошибки сервера)
         String INTERNAL_SERVER_ERROR = "Внутренняя ошибка сервера, попробуйте позже";
         String BALANCE_ERROR = "Ошибка при обработке баланса";
-
-
 }

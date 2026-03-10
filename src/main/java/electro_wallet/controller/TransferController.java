@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.security.Principal;
 
 
 @RestController
@@ -18,9 +19,8 @@ public class TransferController {
         private final TransferService transferService;
 
         @PostMapping("/transactions")
-        public ResponseEntity<TransferResponse> transfer(@Valid @RequestBody TransferRequest request) {
-
-            return new ResponseEntity<>(transferService.transfer(request), HttpStatus.CREATED);
+        public ResponseEntity<TransferResponse> transfer(@Valid @RequestBody TransferRequest request, Principal principal)
+        {
+            return new ResponseEntity<>(transferService.transfer(principal.getName(), request), HttpStatus.CREATED);
         }
-
 }

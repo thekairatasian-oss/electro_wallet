@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 
 public record TransferRequest(
 
-        @NotNull(message = "ID отправителя обязательно")
-        Long sender,
 
         @NotBlank(message = "Номер телефон получателя обязательна")
         @Pattern(regexp = "^\\+996\\d{9}$",

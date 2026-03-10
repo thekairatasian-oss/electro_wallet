@@ -9,9 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {AccountMapper.class})
 public interface UserMapper {
 
-
     UserResponse toResponse(User user);
-
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "role", ignore = true)

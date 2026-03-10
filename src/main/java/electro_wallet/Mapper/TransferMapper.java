@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface TransferMapper {
-
         @Mapping(target = "receiver", source = "receiver.user.phoneNumber")
         TransferResponse toResponse(Transfer transfer);
 

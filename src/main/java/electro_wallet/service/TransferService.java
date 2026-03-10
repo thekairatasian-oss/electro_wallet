@@ -34,11 +34,16 @@ public class TransferService {
         private final UserRepository userRepository;
 
 
-    public TransferResponse transfer(TransferRequest request) {
-        log.info("Начало перевода: отправитель ID {}, получатель (телефон) {}, сумма {}",
-                request.sender(), request.receiver(), request.amount());
+    public TransferResponse transfer(String email,  TransferRequest request) {
 
-        Account senderAccount = accountRepository.findByUserId(request.sender())
+        Long senderId = userRepository.findByEmail(email)
+                        .map(User::getId)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.USER_NOT_FOUND));
+
+        log.info("Начало перевода: отправитель ID {}, получатель (телефон) {}, сумма {}",
+                senderId, request.receiver(), request.amount());
+
+        Account senderAccount = accountRepository.findByUserId(senderId)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.ACCOUNT_NOT_FOUND));
 
         User receiver = userRepository.findByPhoneNumber(request.receiver())
@@ -48,13 +53,13 @@ public class TransferService {
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.ACCOUNT_NOT_FOUND));
 
         if (senderAccount.getUser().getId().equals(receiver.getId())) {
-            log.warn("Попытка перевода самому себе заблокирована для ID: {}", request.sender());
+            log.warn("Попытка перевода самому себе заблокирована для ID: {}", senderId);
             throw new BadRequestException(ErrorMessages.SELF_TRANSFER_NOT_ALLOWED);
         }
 
         if (senderAccount.getBalance().compareTo(request.amount()) < 0) {
             log.warn("Недостаточно средств у отправителя ID: {}. Баланс: {}, Попытка перевода: {}",
-                    request.sender(), senderAccount.getBalance(), request.amount());
+                    senderId, senderAccount.getBalance(), request.amount());
             throw new BadRequestException(ErrorMessages.INSUFFICIENT_FUNDS);
         }
 

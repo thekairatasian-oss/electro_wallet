@@ -2,6 +2,7 @@ package electro_wallet.entity;
 
 import electro_wallet.enums.Currency;
 import electro_wallet.enums.TransferStatus;
+import electro_wallet.enums.TransferType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public class Transfer {
         private Long id;
 
         @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "sender_id")
+        @JoinColumn(name = "sender_id", nullable = true)
         private Account sender;
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -41,6 +42,9 @@ public class Transfer {
 
         @Enumerated(EnumType.STRING)
         private TransferStatus status;
+
+        @Enumerated(EnumType.STRING)
+        private TransferType type;
 
         @CreationTimestamp
         private LocalDateTime timestamp;

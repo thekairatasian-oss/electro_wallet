@@ -36,6 +36,6 @@ public class User {
 
         private boolean enabled = true;
 
-        @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+        @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
         private Account account;
 }

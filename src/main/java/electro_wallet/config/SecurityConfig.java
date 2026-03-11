@@ -20,6 +20,8 @@ public class SecurityConfig {
                 http
                         .csrf(csrf -> csrf.disable())
                         .authorizeHttpRequests(authorize -> authorize
+                                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/transfers/**").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers("/users/register").permitAll()
                                 .anyRequest().authenticated()
                         )

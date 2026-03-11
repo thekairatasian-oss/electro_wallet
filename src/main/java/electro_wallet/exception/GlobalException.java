@@ -25,6 +25,7 @@ public class GlobalException {
                 request.getRequestURI(),
                 LocalDateTime.now()
         );
+
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -45,6 +46,7 @@ public class GlobalException {
                 request.getRequestURI(),
                 LocalDateTime.now()
         );
+
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
@@ -59,6 +61,7 @@ public class GlobalException {
                 request.getRequestURI(),
                 LocalDateTime.now()
         );
+
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
@@ -73,6 +76,7 @@ public class GlobalException {
                 request.getRequestURI(),
                 LocalDateTime.now()
         );
+
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
@@ -88,6 +92,7 @@ public class GlobalException {
                 request.getRequestURI(),
                 LocalDateTime.now()
         );
+
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 
@@ -102,6 +107,7 @@ public class GlobalException {
                 request.getRequestURI(),
                 LocalDateTime.now()
         );
+
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 }

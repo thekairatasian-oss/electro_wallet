@@ -83,7 +83,6 @@ public class TransferService {
         transferRepository.save(transfer);
 
         log.info("Перевод успешно завершен. Транзакция ID: {}, сумма: {}", transfer.getId(), request.amount());
-
         return transferMapper.toResponse(transfer);
     }
 
@@ -94,7 +93,6 @@ public class TransferService {
 
         Account account = accountRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.ACCOUNT_NOT_FOUND));
-
 
         log.info("Запрос истории: страница {}, размер {}, для юзера ID: {}",
                 pageable.getPageNumber(), pageable.getPageSize(), email);

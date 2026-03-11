@@ -56,8 +56,8 @@ public class UserService {
 
         Account account = accountService.createAccount(user);
         user.setAccount(account);
-        log.info("Пользователь успешно зарегистрирован. ID: {}, Email: {}", user.getId(), user.getEmail());
 
+        log.info("Пользователь успешно зарегистрирован. ID: {}, Email: {}", user.getId(), user.getEmail());
         return userMapper.toResponse(user);
     }
 }

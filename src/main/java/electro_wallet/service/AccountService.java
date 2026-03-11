@@ -34,7 +34,6 @@ public class AccountService {
         private final AccountMapper accountMapper;
 
     public Account createAccount(User user) {
-
         log.debug("Запрос на создание аккаунта для пользователя ID: {}", user.getId());
 
         Account account = Account.builder()
@@ -74,7 +73,6 @@ public class AccountService {
         transferRepository.save(depositRecord);
 
         log.info("Баланс пользователя {} успешно пополнен на {} KGS", email, request.amount());
-
         return accountMapper.toResponse(account);
     }
 }

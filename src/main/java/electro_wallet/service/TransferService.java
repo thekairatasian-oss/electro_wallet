@@ -8,6 +8,7 @@ import electro_wallet.entity.Transfer;
 import electro_wallet.entity.User;
 import electro_wallet.enums.Currency;
 import electro_wallet.enums.TransferStatus;
+import electro_wallet.exception.AccessDeniedException;
 import electro_wallet.exception.BadRequestException;
 import electro_wallet.exception.ErrorMessages;
 import electro_wallet.exception.ResourceNotFoundException;
@@ -100,5 +101,26 @@ public class TransferService {
 
         return transferRepository.findBySenderIdOrReceiverId(account.getId(), account.getId(), pageable)
                 .map(transferMapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public TransferResponse getTransactionById(String email, Long transferId) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.USER_NOT_FOUND));
+
+        Transfer transfer = transferRepository.findById(transferId)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.TRANSFER_NOT_FOUND));
+
+        boolean isSender = transfer.getSender() != null && transfer.getSender().getId().equals(user.getId());
+        boolean isReceiver = transfer.getReceiver().getUser().equals(user.getId());
+
+        if (!isSender && isReceiver) {
+            log.warn("Пользователь {} пытался получить доступ к чужой транзакции ID: {}", email, transferId);
+            throw new AccessDeniedException(ErrorMessages.ACCESS_DENIED);
+        }
+
+        log.info("Транзакция ID {} успешно запрошена пользователем {}", transferId, email);
+        return transferMapper.toResponse(transfer);
     }
 }

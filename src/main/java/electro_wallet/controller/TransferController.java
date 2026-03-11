@@ -33,4 +33,9 @@ public class TransferController {
         direction = Sort.Direction.DESC) Pageable pageable, Principal principal) {
                 return ResponseEntity.ok(transferService.getTransactionHistory(principal.getName(), pageable));
         }
+
+        @GetMapping("/{transferId}")
+        public ResponseEntity<TransferResponse> getTransferById(@PathVariable Long transferId, Principal principal) {
+                return ResponseEntity.ok(transferService.getTransactionById(principal.getName(), transferId));
+        }
 }

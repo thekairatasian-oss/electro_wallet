@@ -14,4 +14,6 @@ public interface TransferRepository extends JpaRepository<Transfer, Long> {
 
         Page<Transfer> findAll(Pageable pageable);
 
+        Optional<Transfer> findById(Long transferId);
+
 }

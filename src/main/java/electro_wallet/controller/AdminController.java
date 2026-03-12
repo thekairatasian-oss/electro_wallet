@@ -3,8 +3,6 @@ package electro_wallet.controller;
 import electro_wallet.DTO.TransferResponse;
 import electro_wallet.DTO.UserResponse;
 import electro_wallet.service.AdminService;
-import electro_wallet.service.TransferService;
-import electro_wallet.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AdminController {
 
-            private final UserService userService;
-            private final TransferService transferService;
             private final AdminService adminService;
 
        @GetMapping("/users/search")

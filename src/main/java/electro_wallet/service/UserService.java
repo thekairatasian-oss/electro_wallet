@@ -8,7 +8,6 @@ import electro_wallet.entity.User;
 import electro_wallet.enums.Role;
 import electro_wallet.exception.ConflictException;
 import electro_wallet.exception.ErrorMessages;
-import electro_wallet.repository.AccountRepository;
 import electro_wallet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

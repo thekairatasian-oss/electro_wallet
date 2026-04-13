@@ -21,11 +21,11 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
-    private Account sender;
+    private Account senderNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id")
-    private Account receiver;
+    private Account receiverNumber;
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal amount;

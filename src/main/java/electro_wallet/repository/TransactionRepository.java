@@ -10,14 +10,14 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository <Transaction, Long> {
 
-    @Query("SELECT t FROM Transaction t WHERE t.sender.accountNumber = :phone OR" +
-            " t.receiver.accountNumber = :phone ORDER BY t.timestamp DESC")
+    @Query("SELECT t FROM Transaction t WHERE t.senderNumber.accountNumber = :phone OR" +
+            " t.receiverNumber.accountNumber = :phone ORDER BY t.timestamp DESC")
     List<Transaction> findAllByPhone(@Param("phone") String phone);
 
-    @Query("SELECT t FROM Transaction t WHERE t.sender.accountNumber = :phone ORDER BY t.timestamp DESC")
+    @Query("SELECT t FROM Transaction t WHERE t.senderNumber.accountNumber = :phone ORDER BY t.timestamp DESC")
     List<Transaction> findOutcoming(@Param("phone") String phone);
 
-    @Query("SELECT t FROM Transaction t WHERE t.receiver.accountNumber = :phone ORDER BY t.timestamp DESC")
+    @Query("SELECT t FROM Transaction t WHERE t.receiverNumber.accountNumber = :phone ORDER BY t.timestamp DESC")
     List<Transaction> findIncoming(@Param("phone") String phone);
 
 }

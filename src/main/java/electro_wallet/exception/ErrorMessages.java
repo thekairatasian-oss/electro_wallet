@@ -19,6 +19,7 @@ public interface ErrorMessages {
         String USER_NOT_FOUND = "Пользователь не найден";
         String PHONE_NUMBER_NOT_FOUND = "Номер телефона не найден";
         String TRANSACTION_NOT_FOUND = "История транзакций пуста или запись не найдена";
+        String EMAIL_NOT_FOUND = "Email не найден";
     }
 
     // --- 403 FORBIDDEN (Безопасность и роли) ---

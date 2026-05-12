@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface TransferRepository extends JpaRepository <Transfer, Long>{
 
-    List<Transfer> findAllBySender(Account sender);
+    List<Transfer> findAllBySenderNumber(Account sender);
 
-    List<Transfer> findAllByReceiver(Account receiver);
+    List<Transfer> findAllByReceiverNumber(Account receiver);
 
     @Query("SELECT t FROM Transfer t WHERE t.senderNumber = :account OR" +
             " t.receiverNumber = :account ORDER BY t.timestamp DESC")

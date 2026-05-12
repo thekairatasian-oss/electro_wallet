@@ -15,7 +15,7 @@ public interface TransferMapper {
     @Mapping(target = "receiverNumber", ignore = true)
     Transfer toEntity(TransferRequest request);
 
-    @Mapping(target = "senderNumber.phoneNumber", source = "senderNumber")
-    @Mapping(target = "receiverNumber.phoneNumber", source = "receiverNumber")
+    @Mapping(target = "senderNumber", source = "senderNumber.user.phoneNumber")
+    @Mapping(target = "receiverNumber", source = "receiverNumber.user.phoneNumber")
     TransferResponse toResponse(Transfer transfer);
 }

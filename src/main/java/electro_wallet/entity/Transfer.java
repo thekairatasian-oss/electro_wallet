@@ -1,5 +1,6 @@
 package electro_wallet.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import electro_wallet.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -32,6 +34,9 @@ public class Transfer {
     private BigDecimal amount;
 
     private String message;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime timestamp;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -7,10 +7,8 @@ import electro_wallet.service.TransferService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/transfers")
@@ -28,5 +26,23 @@ public class TransferController {
     public ResponseEntity<String> deposit(@Valid @RequestBody DepositRequest request) {
         transferService.deposit(request);
         return ResponseEntity.ok("Баланс успешно пополнен");
+    }
+
+    @GetMapping("/sender/{phoneNumber}")
+    public ResponseEntity<List<TransferResponse>> findAllBySenderHistory(@PathVariable String phoneNumber) {
+        List<TransferResponse> transfers = transferService.findAllBySenderNumber(phoneNumber);
+        return ResponseEntity.ok(transfers);
+    }
+
+    @GetMapping("/receiver/{phoneNumber}")
+    public ResponseEntity<List<TransferResponse>> findAllByReceiverHistory(@PathVariable String phoneNumber) {
+        List<TransferResponse> transfers = transferService.findAllByReceiverNumber(phoneNumber);
+        return ResponseEntity.ok(transfers);
+    }
+
+    @GetMapping("/user/{phoneNumber}")
+    public ResponseEntity<List<TransferResponse>> findAllUserTransfers(@PathVariable String phoneNumber) {
+        List<TransferResponse> transfers = transferService.findAllUserTransfers(phoneNumber);
+        return ResponseEntity.ok(transfers);
     }
 }

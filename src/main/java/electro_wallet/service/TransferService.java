@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -61,5 +62,44 @@ public class TransferService {
 
         Account account = user.getAccount();
         account.deposit(request.amount());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TransferResponse> findAllBySenderNumber(String phoneNumber) {
+
+        User user = userService.findUserEntityByPhoneNumber(phoneNumber);
+        Account account = user.getAccount();
+
+        List<Transfer> transfers = transferRepository.findAllBySenderNumber(account);
+
+        return transfers.stream()
+                .map(transferMapper::toResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<TransferResponse> findAllByReceiverNumber(String phoneNumber) {
+
+        User user = userService.findUserEntityByPhoneNumber(phoneNumber);
+        Account account = user.getAccount();
+
+        List<Transfer> transfers = transferRepository.findAllByReceiverNumber(account);
+
+        return transfers.stream()
+                .map(transferMapper::toResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<TransferResponse> findAllUserTransfers(String phoneNumber) {
+
+        User user = userService.findUserEntityByPhoneNumber(phoneNumber);
+        Account account = user.getAccount();
+
+        List<Transfer> transfers = transferRepository.findAllUserTransfers(account);
+
+        return transfers.stream()
+                .map(transferMapper::toResponse)
+                .toList();
     }
 }

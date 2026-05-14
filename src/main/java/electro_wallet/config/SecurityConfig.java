@@ -19,9 +19,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/create/**").permitAll()
-                        .requestMatchers("/api/transfers/deposit/**").permitAll()
-                        .requestMatchers("/api/transfers/create/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
         return http.build();

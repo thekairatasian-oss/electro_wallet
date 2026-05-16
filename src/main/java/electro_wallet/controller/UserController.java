@@ -20,23 +20,18 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(request));
     }
 
-    @GetMapping("/username")
-    public ResponseEntity<UserResponse> getUserByUsername(String username) {
-        return ResponseEntity.ok(userService.getUserByUsername(username));
-    }
-
-    @GetMapping("/phone")
-    public ResponseEntity<UserResponse> getUserByPhoneNumber(String phoneNumber) {
+    @GetMapping("/phone/{phoneNumber}")
+    public ResponseEntity<UserResponse> getUserByPhoneNumber(@PathVariable String phoneNumber) {
         return ResponseEntity.ok(userService.getUserByPhoneNumber(phoneNumber));
     }
 
-    @PutMapping("/block")
-    public ResponseEntity<UserResponse> blockUser(String email) {
+    @PutMapping("/block/{email}")
+    public ResponseEntity<UserResponse> blockUser(@PathVariable String email) {
         return ResponseEntity.ok(userService.blockUser(email));
     }
 
-    @PutMapping("/unblock")
-    public ResponseEntity<UserResponse> unblockUser(String email) {
+    @PutMapping("/unblock/{email}")
+    public ResponseEntity<UserResponse> unblockUser(@PathVariable String email) {
         return ResponseEntity.ok(userService.unblockUser(email));
     }
 }

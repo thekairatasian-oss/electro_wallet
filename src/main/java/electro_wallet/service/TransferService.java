@@ -10,6 +10,7 @@ import electro_wallet.enums.Status;
 import electro_wallet.mapper.TransferMapper;
 import electro_wallet.repository.TransferRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -65,6 +66,7 @@ public class TransferService {
     }
 
     @Transactional(readOnly = true)
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public List<TransferResponse> findAllBySenderNumber(String phoneNumber) {
 
         User user = userService.findUserEntityByPhoneNumber(phoneNumber);
@@ -78,6 +80,7 @@ public class TransferService {
     }
 
     @Transactional(readOnly = true)
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public List<TransferResponse> findAllByReceiverNumber(String phoneNumber) {
 
         User user = userService.findUserEntityByPhoneNumber(phoneNumber);
@@ -91,6 +94,7 @@ public class TransferService {
     }
 
     @Transactional(readOnly = true)
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public List<TransferResponse> findAllUserTransfers(String phoneNumber) {
 
         User user = userService.findUserEntityByPhoneNumber(phoneNumber);

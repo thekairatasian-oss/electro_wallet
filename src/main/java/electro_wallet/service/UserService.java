@@ -12,6 +12,7 @@ import electro_wallet.mapper.UserMapper;
 import electro_wallet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,18 +55,14 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserResponse getUserByUsername(String username) {
-        return userMapper.toResponse(userRepository.findByUsername(username)
-                .orElseThrow(() -> new ApiException(ErrorMessages.NotFound.USER_NOT_FOUND, HttpStatus.NOT_FOUND)));
-    }
-
-    @Transactional(readOnly = true)
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public UserResponse getUserByPhoneNumber(String phoneNumber) {
         return userMapper.toResponse(userRepository.findByPhoneNumber(phoneNumber)
         .orElseThrow(() -> new ApiException(ErrorMessages.NotFound.PHONE_NUMBER_NOT_FOUND, HttpStatus.NOT_FOUND)));
     }
 
     @Transactional
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public UserResponse blockUser(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException(ErrorMessages.NotFound.EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND));
@@ -74,6 +71,7 @@ public class UserService {
     }
 
     @Transactional
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public UserResponse unblockUser(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException(ErrorMessages.NotFound.EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND));

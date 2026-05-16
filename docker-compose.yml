@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # Сервис базы данных
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: wallet_postgres
+    environment:
+      POSTGRES_DB: wallet_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - wallet-network
+
+  # Сервис твоего Spring Boot приложения
+  backend-app:
+    build: .
+    container_name: wallet_backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/wallet_db
+    depends_on:
+      - postgres-db # Начнет запускаться только ПОСЛЕ базы данных
+    networks:
+      - wallet-network
+
+volumes:
+  pgdata: # Этот вольюм нужен, чтобы данные в БД не стирались при перезапуске докера
+
+networks:
+  wallet-network: # Общая сеть для контейнеров

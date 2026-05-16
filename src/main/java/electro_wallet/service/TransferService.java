@@ -25,6 +25,7 @@ public class TransferService {
         private final UserService userService;
 
     @Transactional
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public TransferResponse transfer(TransferRequest request) {
 
         User senderNumber = userService.findUserEntityByPhoneNumber(request.senderNumber());
@@ -57,6 +58,7 @@ public class TransferService {
     }
 
     @Transactional
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public void deposit(DepositRequest request) {
 
         User user = userService.findUserEntityByPhoneNumber(request.phoneNumber());

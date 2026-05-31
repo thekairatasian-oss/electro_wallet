@@ -10,6 +10,7 @@ import electro_wallet.exception.ApiException;
 import electro_wallet.exception.ErrorMessages;
 import electro_wallet.mapper.UserMapper;
 import electro_wallet.repository.UserRepository;
+import electro_wallet.util.AccountNumberGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,6 +41,7 @@ public class UserService {
         User user = userMapper.toEntity(request);
 
         Account account = new Account();
+        account.setAccountNumber(AccountNumberGenerator.generate());
         account.setBalance(BigDecimal.ZERO);
         account.setCurrency(Currency.KGS);
         account.setUser(user);

@@ -24,7 +24,7 @@ public class TransferService {
         private final TransferMapper transferMapper;
         private final UserService userService;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public TransferResponse transfer(TransferRequest request) {
 
@@ -57,7 +57,7 @@ public class TransferService {
         return transferMapper.toResponse(transfer);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public void deposit(DepositRequest request) {
 

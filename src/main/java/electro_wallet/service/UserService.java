@@ -26,7 +26,7 @@ public class UserService {
         private final UserMapper userMapper;
         private final BCryptPasswordEncoder passwordEncoder;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public UserResponse createUser(UserRequest request) {
 
         if (userRepository.existsByEmail(request.email())) {

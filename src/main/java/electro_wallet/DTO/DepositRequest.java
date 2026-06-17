@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 public record DepositRequest(
 
-        @NotBlank(message = "Номер телефона обязателен")
+        @NotBlank(message = "Номер телефона не обязателен")
         @Pattern(regexp = "^996\\d{9}$", message = "Номер должен начинаться с 996")
         String phoneNumber,
 

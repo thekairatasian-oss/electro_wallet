@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.http.HttpStatus;
 
 import java.math.BigDecimal;
@@ -37,7 +38,7 @@ public class Account {
     @Version
     private Long version;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
     public void deposit(BigDecimal amount) {

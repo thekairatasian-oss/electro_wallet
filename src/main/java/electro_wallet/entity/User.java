@@ -38,6 +38,6 @@ public class User {
     @Column(nullable = false)
     private boolean Active = true;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private Account account;
 }

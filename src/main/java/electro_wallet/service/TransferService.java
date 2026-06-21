@@ -7,9 +7,11 @@ import electro_wallet.entity.Account;
 import electro_wallet.entity.Transfer;
 import electro_wallet.entity.User;
 import electro_wallet.enums.Status;
+import electro_wallet.exception.ApiException;
 import electro_wallet.mapper.TransferMapper;
 import electro_wallet.repository.TransferRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,23 +36,16 @@ public class TransferService {
         Account senderAccount = senderNumber.getAccount();
         Account receiverAccount = receiverNumber.getAccount();
 
+        senderAccount.withdraw(request.amount());
+        receiverAccount.deposit(request.amount());
+
         Transfer transfer = new Transfer();
         transfer.setSenderNumber(senderAccount);
         transfer.setReceiverNumber(receiverAccount);
         transfer.setAmount(request.amount());
         transfer.setMessage(request.message());
         transfer.setTimestamp(LocalDateTime.now());
-        transfer.setStatus(Status.PENDING);
-
-        try {
-            senderAccount.withdraw(request.amount());
-            receiverAccount.deposit(request.amount());
-            transfer.setStatus(Status.SUCCESS);
-
-        } catch (Exception ex) {
-            transfer.setStatus(Status.FAILED);
-            throw ex;
-        }
+        transfer.setStatus(Status.SUCCESS);
 
         transferRepository.save(transfer);
 
